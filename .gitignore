@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# 本地数据库 / 上传
+backend/local.db
+backend/uploads/
+
+# Node
+node_modules/
+frontend/dist/
+frontend/.vite/
+
+# 环境变量
+.env
+
+# 编辑器
+.idea/
+.vscode/
+.DS_Store
+.cursor/
+
+# 日志
+*.log
