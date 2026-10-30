@@ -1,5 +1,5 @@
 # 企业后台管理系统（RBAC）
-
+![项目图片](Snipaste_2026-10-28_10-52-18.png) 
 基于 **RBAC（用户 - 角色 - 菜单权限）** 模型的企业内部通用后台管理平台，前后端分离：
 Vue3 + Element Plus + Pinia 生态 前端，FastAPI + SQLAlchemy + MySQL + Redis + JWT 后端，
 Docker Compose 一键部署，Nginx 托管静态资源并反向代理接口。
