@@ -4,7 +4,7 @@
 Vue3 + Element Plus + Pinia 生态 前端，FastAPI + SQLAlchemy + MySQL + Redis + JWT 后端，
 Docker Compose 一键部署，Nginx 托管静态资源并反向代理接口。
 
-> 适合作为全栈项目写进简历：覆盖数据库设计、权限模型、接口安全、缓存、日志审计、
+> 覆盖数据库设计、权限模型、接口安全、缓存、日志审计、
 > 动态菜单与按钮级权限、容器化部署等高频考点。
 
 ---
