@@ -5,3 +5,12 @@ local.db
 .env
 uploads
 .pytest_cache
+.pytest-tmp
+.venv
+.venv-mysql
+.ruff_cache
+tests
+requirements-dev.txt
+pyproject.toml
+coverage.xml
+htmlcov

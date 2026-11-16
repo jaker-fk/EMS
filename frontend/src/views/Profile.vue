@@ -77,7 +77,7 @@ const pwd = reactive({ old_password: '', new_password: '', confirm: '' })
 
 const rules = {
   old_password: [{ required: true, message: '请输入原密码', trigger: 'blur' }],
-  new_password: [{ required: true, min: 6, message: '新密码至少 6 位', trigger: 'blur' }],
+  new_password: [{ required: true, min: 8, message: '新密码至少 8 位，且需包含两类字符', trigger: 'blur' }],
   confirm: [
     { required: true, message: '请再次输入新密码', trigger: 'blur' },
     {
@@ -103,8 +103,11 @@ async function changePwd(): Promise<void> {
   await pwdRef.value?.validate()
   await api.put('/profile/password', { old_password: pwd.old_password, new_password: pwd.new_password })
   ElMessage.success('密码修改成功，请重新登录')
-  localStorage.clear()
-  location.href = '/login'
+  // 只清理后台登录态，保留同一浏览器里的前台学员登录
+  localStorage.removeItem('token')
+  localStorage.removeItem('perms')
+  localStorage.removeItem('nickname')
+  location.href = '/admin/login'
 }
 
 onMounted(async () => {

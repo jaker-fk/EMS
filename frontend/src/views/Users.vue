@@ -54,7 +54,7 @@
         <el-input v-model="form.username" :disabled="!!form.id" />
       </el-form-item>
       <el-form-item v-if="!form.id" label="密码" prop="password">
-        <el-input v-model="form.password" type="password" show-password placeholder="至少 6 位" />
+        <el-input v-model="form.password" type="password" show-password placeholder="至少 8 位，含两类字符" />
       </el-form-item>
       <el-form-item label="昵称">
         <el-input v-model="form.nickname" />
@@ -98,7 +98,7 @@ const form = reactive<any>({ id: 0, username: '', password: '', nickname: '', ph
 
 const rules = {
   username: [{ required: true, message: '请输入账号', trigger: 'blur' }],
-  password: [{ required: true, min: 6, message: '密码至少 6 位', trigger: 'blur' }],
+  password: [{ required: true, min: 8, message: '密码至少 8 位，且需包含两类字符', trigger: 'blur' }],
 }
 
 const can = hasPerm
@@ -152,8 +152,8 @@ async function save(): Promise<void> {
 async function resetPwd(r: any): Promise<void> {
   const { value } = await ElMessageBox.prompt(`请输入 ${r.username} 的新密码`, '重置密码', {
     inputType: 'password',
-    inputPattern: /.{6,}/,
-    inputErrorMessage: '密码至少 6 位',
+    inputPattern: /.{8,}/,
+    inputErrorMessage: '密码至少 8 位，且需包含两类字符',
   })
   await api.put(`/users/${r.id}/password`, { password: value })
   ElMessage.success('密码已重置')

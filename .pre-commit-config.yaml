@@ -1,0 +1,16 @@
+# 安装后执行：pre-commit install
+# 提交前只做轻量检查，完整检查交给 CI，避免本地提交被大范围格式化打扰
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-yaml
+      - id: check-added-large-files
+        args: ["--maxkb=2048"]
+      - id: check-merge-conflict
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.9.10
+    hooks:
+      - id: ruff
+        files: ^backend/

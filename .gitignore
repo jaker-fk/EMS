@@ -9,6 +9,31 @@ venv/
 backend/local.db
 backend/uploads/
 
+# 本项目专用的本地 MySQL 实例（端口 3307，见 mysql/local-mysql.ps1）
+.mysql-3307/
+
+# 本地验证用的 Python 3.12 运行时 / 虚拟环境（可随时删除重建）
+.python/
+.venv-mysql/
+
+# 安装依赖时的临时目录
+.tmp-pip/
+.tmp-uv/
+.tmp-alembic/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.tmp-coverage/
+.tmp-npm-cache/
+
+# 测试临时目录（TEMP 为中文路径时 pytest 会退化到项目内建库）
+.pytest-tmp/
+
+# 数据库备份产物
+backups/
+
 # Node
 node_modules/
 frontend/dist/
@@ -25,3 +50,6 @@ frontend/.vite/
 
 # 日志
 *.log
+
+# 本地整理的提示词资料（与项目无关，不入库）
+大肥鱼提示词.md

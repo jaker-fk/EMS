@@ -1,0 +1,25 @@
+[tool.ruff]
+target-version = "py311"
+line-length = 120
+extend-exclude = ["migrations/versions", "__pycache__"]
+
+[tool.ruff.lint]
+# 先启用低风险、高价值的规则：语法错误、未定义变量、导入顺序、常见 bug
+select = ["E9", "F", "I", "B"]
+ignore = [
+  "B008",  # FastAPI 的 Depends()/Query() 作为默认值是框架惯用法
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["B011"]
+"app/main.py" = ["B904"]
+
+[tool.coverage.run]
+source = ["app"]
+omit = ["app/main.py"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+exclude_lines = ["pragma: no cover", "if __name__ == .__main__.:"]

@@ -1,0 +1,1 @@
+# 迁移脚本目录（Alembic 要求存在）。当前为空，由 `alembic revision` 生成。
