@@ -62,10 +62,13 @@
       </el-header>
 
       <el-main class="main">
+        <!--
+          切页直接替换组件，不再套 <transition mode="out-in">：
+          后台页面大多是「el-card + el-dialog」双根节点，而 <Transition> 只认单一元素根，
+          离场钩子拿不到元素就永远不结束，导致从这类页面再点菜单时内容区整块空白。
+        -->
         <router-view v-slot="{ Component }">
-          <transition name="fade" mode="out-in">
-            <component :is="Component" :key="`${route.path}-${viewKey}`" />
-          </transition>
+          <component :is="Component" :key="`${route.path}-${viewKey}`" />
         </router-view>
       </el-main>
     </el-container>
