@@ -1,7 +1,15 @@
 <template>
   <article class="teacher-card site-card">
     <div class="head">
-      <div class="avatar" :style="coverStyle(teacher.name)">
+      <img
+        v-if="avatarSrc"
+        class="avatar avatar--img"
+        :src="avatarSrc"
+        :alt="teacher.name"
+        loading="lazy"
+        decoding="async"
+      />
+      <div v-else class="avatar" :style="coverStyle(teacher.name)">
         <span>{{ initials(teacher.name, 1) }}</span>
       </div>
       <div class="who">
@@ -20,9 +28,11 @@
 </template>
 
 <script setup lang="ts">
-import { coverStyle, initials, type SiteTeacher } from '../../utils/site'
+import { computed } from 'vue'
+import { coverStyle, imageUrl, initials, type SiteTeacher } from '../../utils/site'
 
-defineProps<{ teacher: SiteTeacher }>()
+const props = defineProps<{ teacher: SiteTeacher }>()
+const avatarSrc = computed(() => imageUrl(props.teacher.avatar))
 </script>
 
 <style scoped>
@@ -50,6 +60,12 @@ defineProps<{ teacher: SiteTeacher }>()
   font-size: 20px;
   font-weight: 600;
   flex: none;
+  overflow: hidden;
+}
+
+.avatar--img {
+  object-fit: cover;
+  background: #eef2f7;
 }
 
 .who h3 {

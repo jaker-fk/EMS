@@ -22,7 +22,15 @@
       </div>
 
       <div class="teacher" v-if="course.teacher_name">
-        <span class="avatar-dot">{{ initials(course.teacher_name, 1) }}</span>
+        <img
+          v-if="teacherAvatar"
+          class="avatar-dot avatar-dot--img"
+          :src="teacherAvatar"
+          :alt="course.teacher_name"
+          loading="lazy"
+          decoding="async"
+        />
+        <span v-else class="avatar-dot">{{ initials(course.teacher_name, 1) }}</span>
         授课：{{ course.teacher_name }}
         <em v-if="course.teacher_title">· {{ course.teacher_title }}</em>
       </div>
@@ -41,9 +49,11 @@
 </template>
 
 <script setup lang="ts">
-import { coverStyle, initials, priceText, type SiteCourse } from '../../utils/site'
+import { computed } from 'vue'
+import { coverStyle, imageUrl, initials, priceText, type SiteCourse } from '../../utils/site'
 
-defineProps<{ course: SiteCourse }>()
+const props = defineProps<{ course: SiteCourse }>()
+const teacherAvatar = computed(() => imageUrl(props.course.teacher_avatar))
 </script>
 
 <style scoped>
@@ -152,6 +162,11 @@ defineProps<{ course: SiteCourse }>()
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+.avatar-dot--img {
+  object-fit: cover;
+  background: #eef2f7;
 }
 
 .foot {

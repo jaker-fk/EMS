@@ -23,7 +23,14 @@
       <el-table-column label="教师" min-width="200">
         <template #default="{ row }">
           <div class="teacher-cell">
-            <span class="avatar" :style="coverStyle(row.name)">{{ initials(row.name, 1) }}</span>
+            <img
+              v-if="imageUrl(row.avatar)"
+              class="avatar avatar--img"
+              :src="imageUrl(row.avatar)"
+              :alt="row.name"
+              loading="lazy"
+            />
+            <span v-else class="avatar" :style="coverStyle(row.name)">{{ initials(row.name, 1) }}</span>
             <div>
               <strong>{{ row.name }}</strong>
               <small>{{ row.title || '—' }}</small>
@@ -86,7 +93,16 @@
         <el-input v-model.trim="form.tags" placeholder="逗号分隔，如：信息学奥赛,Python" />
       </el-form-item>
       <el-form-item label="头像地址">
-        <el-input v-model.trim="form.avatar" placeholder="选填，留空则用姓名首字生成" />
+        <div class="avatar-field">
+          <div class="avatar-row">
+            <el-input v-model.trim="form.avatar" placeholder="选填，支持 https 链接或 /uploads/xxx.png" />
+            <span class="avatar-thumb">
+              <img v-if="imageUrl(form.avatar)" :src="imageUrl(form.avatar)" alt="头像预览" />
+              <em v-else>{{ initials(form.name || '教师', 1) }}</em>
+            </span>
+          </div>
+          <small>留空则用「姓名首字 + 渐变」生成；填好保存后列表和前台立即显示这张图</small>
+        </div>
       </el-form-item>
       <el-form-item label="教师简介">
         <el-input v-model="form.intro" type="textarea" :rows="4" maxlength="500" show-word-limit />
@@ -111,7 +127,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 import api from '../utils/request'
 import { hasPerm } from '../utils/auth'
-import { coverStyle, initials } from '../utils/site'
+import { coverStyle, imageUrl, initials } from '../utils/site'
 
 interface TeacherRow {
   id: number
@@ -249,6 +265,52 @@ onMounted(load)
   color: #fff;
   font-weight: 600;
   flex: none;
+  overflow: hidden;
+}
+
+.avatar--img {
+  object-fit: cover;
+  background: #eef2f7;
+}
+
+.avatar-field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex: none;
+  background: #f2f5fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8a919f;
+  font-size: 13px;
+  font-style: normal;
+}
+
+.avatar-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-field small {
+  color: #8a919f;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .teacher-cell strong {

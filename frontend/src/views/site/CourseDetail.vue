@@ -42,7 +42,13 @@
             <div v-if="course.teacher_name" class="panel">
               <h2>授课教师</h2>
               <div class="teacher">
-                <div class="avatar" :style="coverStyle(course.teacher_name)">
+                <img
+                  v-if="teacherAvatar"
+                  class="avatar avatar--img"
+                  :src="teacherAvatar"
+                  :alt="course.teacher_name"
+                />
+                <div v-else class="avatar" :style="coverStyle(course.teacher_name)">
                   {{ initials(course.teacher_name, 1) }}
                 </div>
                 <div>
@@ -140,14 +146,14 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive, ref, watch } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { CircleCheck } from '@element-plus/icons-vue'
 import api from '../../utils/request'
 import siteApi, { SITE_TOKEN_KEY } from '../../utils/siteRequest'
 import { useSiteSessionStore } from '../../stores/siteSession'
-import { coverStyle, initials, priceText, type SiteCourse } from '../../utils/site'
+import { coverStyle, imageUrl, initials, priceText, type SiteCourse } from '../../utils/site'
 import CourseCard from '../../components/site/CourseCard.vue'
 
 const route = useRoute()
@@ -157,6 +163,7 @@ const site = useSiteSessionStore()
 const loading = ref(false)
 const notFound = ref(false)
 const course = ref<SiteCourse | null>(null)
+const teacherAvatar = computed(() => imageUrl(course.value?.teacher_avatar))
 const formRef = ref()
 const submitting = ref(false)
 const submitted = ref(false)
@@ -382,6 +389,11 @@ onMounted(() => {
   color: #fff;
   font-size: 20px;
   font-weight: 600;
+}
+
+.teacher .avatar--img {
+  object-fit: cover;
+  background: #eef2f7;
 }
 
 .teacher strong {

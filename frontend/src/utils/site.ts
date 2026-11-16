@@ -26,6 +26,16 @@ export function coverStyle(seed: string): Record<string, string> {
   return { background: `linear-gradient(135deg, ${from} 0%, ${to} 100%)` }
 }
 
+/** 图片地址归一化：站内路径原样返回，裸域名补 https，// 开头补协议 */
+export function imageUrl(url?: string): string {
+  const value = (url || '').trim()
+  if (!value) return ''
+  if (value.startsWith('//')) return `https:${value}`
+  if (value.startsWith('/') || value.startsWith('data:')) return value
+  if (/^[a-z][a-z0-9+.-]*:/i.test(value)) return value
+  return `https://${value}`
+}
+
 /** 取标题前两个有效字符作为占位文字 */
 export function initials(text: string, length = 2): string {
   const cleaned = (text || '').replace(/[^\u4e00-\u9fa5A-Za-z0-9]/g, '')
@@ -66,6 +76,7 @@ export interface SiteCourse {
   teacher_id?: number
   teacher_name?: string
   teacher_title?: string
+  teacher_avatar?: string
   is_recommend?: number
   view_count?: number
   description?: string

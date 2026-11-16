@@ -94,6 +94,7 @@ def _course_card(course: Course, category=None, teacher=None) -> dict:
         "teacher_id": course.teacher_id,
         "teacher_name": teacher.name if teacher else "",
         "teacher_title": teacher.title if teacher else "",
+        "teacher_avatar": teacher.avatar if teacher else "",
         "is_recommend": course.is_recommend,
         "view_count": course.view_count,
     }
